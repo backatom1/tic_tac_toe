@@ -19,15 +19,20 @@ class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null)
+      squares: Array(9).fill(null),
+      xIsNext: true
     };
   }
 
   handleClick(i) {
+    const { xIsNext } = this.state;
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
-    this.setState({ squares: squares });
-    console.log(this.state.squares)
+    squares[i] = xIsNext ? 'X' : 'O';
+    this.setState({
+      squares: squares,
+      xIsNext: !xIsNext,
+    });
+    console.log(this.state.squares, xIsNext);
   }
 
   renderSquare = (i) => {
@@ -41,7 +46,8 @@ class Board extends Component {
   }
 
   render() {
-    const status = 'Next player: X';
+    const { xIsNext } = this.state;
+    const status = `Следующий ход: ${(xIsNext ? 'X' : 'O')}`;
 
     return (
       <div>
